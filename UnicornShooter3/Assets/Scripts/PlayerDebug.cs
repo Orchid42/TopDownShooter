@@ -4,6 +4,7 @@ public class PlayerDebug : MonoBehaviour
 {
     public float moveSpeed = 1f;
     public Vector3 moveDirection;
+    public Vector3 facingDirection = Vector3.right;
 
     public GameObject projectilePrefab;
     public Transform firePoint;
@@ -23,11 +24,22 @@ public class PlayerDebug : MonoBehaviour
 
         moveDirection = moveDirection.normalized;
 
+        if (moveDirection != Vector3.zero)
+        {
+            facingDirection = moveDirection;
+        }
+
+        if (facingDirection != Vector3.zero)
+        {
+            float angle = Mathf.Atan2(facingDirection.y, facingDirection.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        }
+
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+            Instantiate(projectilePrefab, firePoint.position, transform.rotation);
         }
     }
 }
