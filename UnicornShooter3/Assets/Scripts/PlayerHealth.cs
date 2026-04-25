@@ -33,4 +33,14 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         transform.position = respawnPosition;
     }
+
+    public void Heal(float amount)
+    {
+        currentHealth += amount;
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
 }
